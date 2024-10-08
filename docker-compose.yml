@@ -1,0 +1,43 @@
+services:
+  wordpress:
+    image: wordpress
+    restart: unless-stopped      
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ${USER}
+      WORDPRESS_DB_PASSWORD: ${PASSWD}
+      WORDPRESS_DB_NAME: wordpressdb
+    volumes:
+      - ./html:/var/www/html
+
+  db:
+    image: mysql:8.0
+    restart: unless-stopped  
+    environment:
+      MYSQL_DATABASE: wordpressdb  
+      MYSQL_USER: ${USER}
+      MYSQL_PASSWORD: ${PASSWD}
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8443:80
+    environment:
+      - PMA_HOST=db  
+      - PMA_USER=${USER}
+      - PMA_PASSWORD=${PASSWD}
+      - PMA_ARBITRARY=1
+
+volumes:
+  db_data:
+
+  
+      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # เพิ่มสคริปต์เพื่อสร้างฐานข้อมูลเพิ่มเติม
+      # - ./images:/var/www/html/wp-content/uploads/       
+      # - ./plugins:/var/www/html/wp-content/plugins/
+      # - ./themes:/var/www/html/wp-content/themes/      
