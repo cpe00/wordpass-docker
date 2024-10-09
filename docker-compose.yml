@@ -11,7 +11,7 @@ services:
       WORDPRESS_DB_NAME: wordpressdb
     volumes:
       - ./html:/var/www/html
-      # - wordpress2:/var/www/html      
+      # - wordpress3:/var/www/html      
 
   db:
     image: mysql:8.0
@@ -22,7 +22,7 @@ services:
       MYSQL_PASSWORD: ${PASSWD}    
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
-      - db2:/var/lib/mysql
+      - db3:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin
@@ -36,5 +36,5 @@ services:
       - PMA_ARBITRARY=1
 
 volumes:
-  wordpress2:
-  db2:
+  wordpress3:
+  db3:
